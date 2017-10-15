@@ -12,8 +12,8 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <agm-map >
-
+        <agm-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="14">
+          <agm-marker [latitude]="location.lat" [longitude]="location.lng"></agm-marker>
         </agm-map >
       </ion-col>
     </ion-row>

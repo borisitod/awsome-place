@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {ModalController} from "ionic-angular";
 import {SetLocationPage} from "../set-location/set-location";
+import {Location} from "../../models/location";
 
 
 @Component({
@@ -10,6 +11,11 @@ import {SetLocationPage} from "../set-location/set-location";
 })
 export class AddPlacePage {
 
+    location: Location = {
+            lat: -37.8136,
+            lng: 144.9631,
+    };
+
     constructor(private modalCtrl: ModalController) {}
 
     onSubmit(form: NgForm) {
@@ -17,7 +23,7 @@ export class AddPlacePage {
     }
 
     onOpenMap() {
-        const modal = this.modalCtrl.create(SetLocationPage);
+        const modal = this.modalCtrl.create(SetLocationPage, {location: this.location});
         modal.present();
     }
 
