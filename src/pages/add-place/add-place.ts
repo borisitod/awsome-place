@@ -41,9 +41,10 @@ export class AddPlacePage {
 
     onLocate() {
         this.geolocation.getCurrentPosition()
-            .then((resp) => {
-            console.log(resp)
-            // resp.coords.longitude
+            .then((location) => {
+                this.location.lat = location.coords.latitude;
+                this.location.lng = location.coords.longitude;
+                this.locationIsSet = true;
         }).catch((error) => {
             console.log('Error getting location', error);
         });
