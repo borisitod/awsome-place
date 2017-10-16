@@ -70,10 +70,11 @@ export class AddPlacePage {
     onTakePhoto() {
         this.camera.getPicture({
             encodingType: this.camera.EncodingType.JPEG,
+            destinationType: this.camera.DestinationType.DATA_URL,
             correctOrientation: true
         })
         .then(imageData => {
-            this.imageUrl = imageData;
+            this.imageUrl = "data:image/jpeg;base64," + imageData;;
         })
         .catch(
             err => {
