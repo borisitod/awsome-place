@@ -3,6 +3,8 @@ import {NgForm} from "@angular/forms";
 import {ModalController} from "ionic-angular";
 import {SetLocationPage} from "../set-location/set-location";
 import {Location} from "../../models/location";
+import { Geolocation } from '@ionic-native/geolocation';
+
 
 
 @Component({
@@ -18,7 +20,7 @@ export class AddPlacePage {
 
     locationIsSet = false;
 
-    constructor(private modalCtrl: ModalController) {}
+    constructor(private modalCtrl: ModalController, private geolocation: Geolocation) {}
 
     onSubmit(form: NgForm) {
         console.log(form.value);
@@ -35,6 +37,16 @@ export class AddPlacePage {
                 }
             }
         )
+    }
+
+    onLocate() {
+        this.geolocation.getCurrentPosition()
+            .then((resp) => {
+            console.log(resp)
+            // resp.coords.longitude
+        }).catch((error) => {
+            console.log('Error getting location', error);
+        });
     }
 
 
