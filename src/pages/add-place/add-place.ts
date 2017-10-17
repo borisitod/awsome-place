@@ -35,7 +35,7 @@ export class AddPlacePage {
     }
 
     onSubmit(form: NgForm) {
-        this.imageUrl = 'http://www.australia.com/content/australia/en_us/places/melbourne/top-10-things-to-do/_jcr_content/image.adapt.761.HIGH.jpg';
+        //this.imageUrl = 'http://www.australia.com/content/australia/en_us/places/melbourne/top-10-things-to-do/_jcr_content/image.adapt.761.HIGH.jpg';
         this.placesService.addPlace(form.value.title, form.value.description, this.location, this.imageUrl);
         form.reset();
         this.location = {
@@ -84,7 +84,7 @@ export class AddPlacePage {
     onTakePhoto() {
         this.camera.getPicture({
             encodingType: this.camera.EncodingType.JPEG,
-            destinationType: this.camera.DestinationType.DATA_URL,
+            //destinationType: this.camera.DestinationType.DATA_URL,
             correctOrientation: true
         })
         .then(imageData => {
@@ -102,7 +102,7 @@ export class AddPlacePage {
                     (err: FileError)=>{
                         this.imageUrl = '';
                         const toast = this.toastCtrl.create({
-                            message: 'Could not save the image. ' + FileError,
+                            message: 'Could not save the image. ' + err,
                             duration: 2000
                         })
                         toast.present();
