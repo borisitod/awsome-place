@@ -12,6 +12,7 @@ import {SetLocationPage} from "../pages/set-location/set-location";
 import {AgmCoreModule} from "@agm/core";
 import {Geolocation} from "@ionic-native/geolocation";
 import {Camera} from "@ionic-native/camera";
+import {PlacesService} from "../services/places";
 
 @NgModule({
     declarations: [
@@ -41,6 +42,7 @@ import {Camera} from "@ionic-native/camera";
         SplashScreen,
         Geolocation,
         Camera,
+        PlacesService,
         {provide: ErrorHandler, useClass: IonicErrorHandler}
     ]
 })
