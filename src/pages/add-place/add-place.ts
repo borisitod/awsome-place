@@ -7,6 +7,7 @@ import {Geolocation} from '@ionic-native/geolocation';
 import {Camera} from '@ionic-native/camera';
 import {Entry, File, FileError} from '@ionic-native/file';
 import {PlacesService} from "../../services/places";
+import { normalizeURL } from 'ionic-angular';
 
 declare var cordova: any;
 
@@ -84,33 +85,31 @@ export class AddPlacePage {
     onTakePhoto() {
         this.camera.getPicture({
             encodingType: this.camera.EncodingType.JPEG,
-            destinationType: this.camera.DestinationType.DATA_URL,
+            //destinationType: this.camera.DestinationType.FILE_URI,
             correctOrientation: true
         })
         .then(imageData => {
             const currentName = imageData.replace(/^.*[\\\/]/,'');
             const path = imageData.replace(/[^\/]*$/, '');
             const newFileName = new Date().getUTCMilliseconds() + '.jpg';
-            this.file.moveFile(path, currentName, cordova.file.dataDirectory, newFileName)
+            this.file.moveFile(path, currentName, this.file.dataDirectory, newFileName)
                 .then(
                     (data: Entry) => {
-                        this.imageUrl = data.nativeURL;
+                        this.imageUrl = normalizeURL(data.nativeURL);
                         this.camera.cleanup();
-                        //this.file.removeFile(path, currentName);
                     }
                 )
                 .catch(
                     (err: FileError)=>{
                         this.imageUrl = '';
                         const toast = this.toastCtrl.create({
-                            message: 'Could not save the image. ' + err,
+                            message: 'Could not save the image. ' + err.message,
                             duration: 2000
                         })
                         toast.present();
                         this.camera.cleanup();
                     }
                 )
-            this.imageUrl = "data:image/jpeg;base64," + imageData;
         })
         .catch(
             err => {
