@@ -27,7 +27,7 @@ export class AddPlacePage {
                 private loadingCtrl: LoadingController,
                 private toastCtrl: ToastController,
                 private camera: Camera,
-                private placesService: PlacesService
+                private placesService: PlacesService,
                 ) {
     }
 
