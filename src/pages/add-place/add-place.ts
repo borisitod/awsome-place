@@ -5,8 +5,10 @@ import {SetLocationPage} from "../set-location/set-location";
 import {Location} from "../../models/location";
 import {Geolocation} from '@ionic-native/geolocation';
 import {Camera} from '@ionic-native/camera';
+import {Entry, File, FileError} from '@ionic-native/file';
 import {PlacesService} from "../../services/places";
 
+declare var cordova: any;
 
 @Component({
     selector: 'page-add-place',
@@ -28,6 +30,7 @@ export class AddPlacePage {
                 private toastCtrl: ToastController,
                 private camera: Camera,
                 private placesService: PlacesService,
+                private file: File
                 ) {
     }
 
@@ -85,11 +88,36 @@ export class AddPlacePage {
             correctOrientation: true
         })
         .then(imageData => {
-            this.imageUrl = "data:image/jpeg;base64," + imageData;
+            const currentName = imageData.replace(/^.*[\\\/]/,'');
+            const path = imageData.replace(/[^\/]*$/, '');
+            this.file.moveFile(path, currentName, this.file.dataDirectory, currentName)
+                .then(
+                    (data: Entry) => {
+                        this.imageUrl = data.nativeURL;
+                        this.camera.cleanup();
+                        //this.file.removeFile(path, currentName);
+                    }
+                )
+                .catch(
+                    (err: FileError)=>{
+                        this.imageUrl = '';
+                        const toast = this.toastCtrl.create({
+                            message: 'Could not save the image. ' + FileError,
+                            duration: 2000
+                        })
+                        toast.present();
+                        this.camera.cleanup();
+                    }
+                )
+            //this.imageUrl = "data:image/jpeg;base64," + imageData;
         })
         .catch(
             err => {
-                console.log(err);
+                const toast = this.toastCtrl.create({
+                    message: 'Could not take the image. Please try again',
+                    duration: 2000
+                })
+                toast.present();
             }
         )
     }

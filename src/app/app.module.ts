@@ -13,6 +13,7 @@ import {AgmCoreModule} from "@agm/core";
 import {Geolocation} from "@ionic-native/geolocation";
 import {Camera} from "@ionic-native/camera";
 import {PlacesService} from "../services/places";
+import {File} from "@ionic-native/file";
 
 @NgModule({
     declarations: [
@@ -43,6 +44,7 @@ import {PlacesService} from "../services/places";
         Geolocation,
         Camera,
         PlacesService,
+        File,
         {provide: ErrorHandler, useClass: IonicErrorHandler}
     ]
 })
