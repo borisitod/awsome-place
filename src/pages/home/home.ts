@@ -32,7 +32,12 @@ export class HomePage implements OnInit{
 
     onOpenPlace(place: Place, index: number) {
         const modal = this.modalCtrl.create(PlacePage, {place: place, index: index});
-        modal.present()
+        modal.present();
+        modal.onDidDismiss(
+            () => {
+                this.places = this.placesService.loadPlaces();
+            }
+        );
     }
 
 
