@@ -32,6 +32,7 @@ export class AddPlacePage {
     }
 
     onSubmit(form: NgForm) {
+        this.imageUrl = 'http://www.australia.com/content/australia/en_us/places/melbourne/top-10-things-to-do/_jcr_content/image.adapt.761.HIGH.jpg';
         this.placesService.addPlace(form.value.title, form.value.description, this.location, this.imageUrl);
         form.reset();
         this.location = {
